@@ -1,0 +1,16 @@
+.css-vghtuh-MuiModal-root-MuiDrawer-root {
+    z-index: 9999 !important;
+    position: relative !important;
+}
+.suc-msg {
+    color: rgb(0, 187, 0);
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0px;
+}
+.err-msg {
+    color: rgb(255, 0, 0);
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0px;
+}
