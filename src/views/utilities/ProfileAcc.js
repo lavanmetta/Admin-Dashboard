@@ -9,6 +9,7 @@ import axios from "axios";
 import  { useState } from "react";
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import Cookies from 'js-cookie';
 import {
   Box,
   FormControl,
@@ -25,18 +26,11 @@ export default function ProfileManage({ ...others }) {
   const [error, setError] = useState("");
 
 
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-      return parts.pop().split(';').shift();
-    }
-  }
 
   const changePassword = (data) => {
   
   
-    const accessToken = getCookie('token');
+    const accessToken = Cookies.get('token');
     console.log(accessToken);
   
     if (!accessToken) {
@@ -44,12 +38,12 @@ export default function ProfileManage({ ...others }) {
       return;
     }
   
-    axios.put("http://localhost:3001/auth/change-password", data, {
+    axios.put("http://localhost:3001/auth/changepassword", data, {
 
-      headers: {
-        accessToken: accessToken
-      }
-
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+      
     })
       .then((response) => {
         console.log(response)

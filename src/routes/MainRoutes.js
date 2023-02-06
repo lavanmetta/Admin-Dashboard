@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import withAuth from './Auth';
+import withAdminAuth from './AdminAuth';
 // project imports
 
 import Loadable from 'ui-component/Loadable';
@@ -13,7 +14,7 @@ const AddLocation = withAuth(Loadable(lazy(() => import('views/utilities/AddLoca
 const Locations = withAuth(Loadable(lazy(() => import('views/utilities/Locations'))));
 const Users = withAuth(Loadable(lazy(() => import('views/utilities/Users'))));
 const ProfileAcc = withAuth(Loadable(lazy(() => import('views/utilities/ProfileAcc'))));
-
+const Admin = withAdminAuth(Loadable(lazy(() => import('views/utilities/Admin.js'))));
 // sample page routing
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -67,6 +68,15 @@ const MainRoutes = {
                 {
                     path: 'profile-manage',
                     element: <ProfileAcc />
+                }
+            ]
+        },
+        {
+            path: '/',
+            children: [
+                {
+                    path: 'admin',
+                    element: <Admin />
                 }
             ]
         },

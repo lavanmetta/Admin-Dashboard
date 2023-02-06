@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -57,29 +57,43 @@ const FirebaseLogin = ({ ...others }) => {
  
 
     let history = useNavigate();
+
     const onLogin = async (data) => {
         try {
-          const response = await axios.post("http://localhost:3001/auth/login", data, {
-            headers: { "Content-Type": "application/json" },
-            
-          });
+            const response = await axios.post("http://localhost:3001/auth/login", data);
       
           if (response.data.error) {
             setError("Login failed. Please check your email and password.");
             return;
           }
-      
-          const expires = new Date(Date.now() + 1 * 60 * 60 * 1000).toUTCString();
-          document.cookie = `token=${response.data.accessToken}; expires=${expires}; path=/;${
-            process.env.NODE_ENV === "production" ? "secure; HttpOnly" : ""
-          }`;
-          document.cookie = `username=${response.data.username}; expires=${expires}; path=/;`;
-          setSuccess("Sign-in Successful");
-          history("/dashboard");
-          console.log(response)
+
+          if (!response.data.token) {
+            setError("Access token is not available. Login failed.");
+            return;
+          }
+
+            Cookies.set('token', response.data.token);
+            Cookies.set('role', response.data.role);
+
+          if (response.data.role  === 'admin') {
+            
+            
+                history("/admin")
+          }
+          
+          if (response.data.role === 'superadmin') {
+            
+            setSuccess("Sign-in Successful");
+            history("/dashboard");
+              
+            console.log(response)
+          }
+          
+
         } catch (error) {
-          console.log(error);
-          setError("An error occurred while signing in. Please try again later.");
+
+            console.log(error);
+            setError("An error occurred while signing in. Please try again later.");
         }
       };
       

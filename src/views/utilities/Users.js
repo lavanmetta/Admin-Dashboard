@@ -70,6 +70,7 @@ return (
             <TableCell >Name</TableCell>
             <TableCell >phone Number</TableCell>
             <TableCell>Email</TableCell>
+            <TableCell>Created at</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -82,6 +83,7 @@ return (
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.phonenumber}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell>{user.createdAt}</TableCell>
             </TableRow>
         ))}
 

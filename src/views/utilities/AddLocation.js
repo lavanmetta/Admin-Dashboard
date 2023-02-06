@@ -107,7 +107,7 @@ const AddLocation = ({ ...others }) => {
         radius_proximity: Yup.number().required(),
         parent_location: Yup.string().required(),
         description: Yup.string().required(),
-        photos_videos: Yup.mixed().required("A file is required")
+        photos_videos: Yup.mixed()
       })}
 
       onSubmit={onSubmit}
